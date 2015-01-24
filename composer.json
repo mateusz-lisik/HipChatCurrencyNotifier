@@ -1,0 +1,8 @@
+{
+  "require": {
+    "php-curl-class/php-curl-class": "2.0.0",
+    "keradus/psr4autoloader": "v2.0.1",
+    "apache/log4php": "3.x-dev",
+    "hipchat/hipchat-php": "v1.3"
+  }
+}
