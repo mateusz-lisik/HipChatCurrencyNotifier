@@ -17,11 +17,13 @@ class Notification {
         $this->curl->setHeader('content-type', 'application/json');
     }
 
-    public function sendMessage($room, $color, $text) {
+    public function sendMessage($room, $color, $text, $notify)
+    {
         $url = sprintf(self::NOTIFICATION_URL, $room, $this->token);
         $this->curl->post($url, json_encode([
             'color' => $color,
-            'message' => $text
+            'message' => $text,
+            'notify' => (bool)$notify ? 'true' : 'false'
         ]));
     }
 }

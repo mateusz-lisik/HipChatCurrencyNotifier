@@ -2,9 +2,9 @@
 
 namespace Matt\HipChatCurrencyNotifier;
 
-use Matt\HipChatCurrencyNotifier\Notification\Notification;
 use Matt\HipChatCurrencyNotifier\Config\Config;
 use Matt\HipChatCurrencyNotifier\CurrencyChecker\CurrencyChecker;
+use Matt\HipChatCurrencyNotifier\Notification\Notification;
 
 
 class Application
@@ -12,6 +12,9 @@ class Application
     private $config;
     private $currencyChecker;
     private $notifier;
+    private $room;
+    private $color;
+    private $notify;
 
     public function __construct()
     {
@@ -22,12 +25,15 @@ class Application
         );
 
         $this->notifier = new Notification($this->config->getValue("hipchat", "token"));
+        $this->room = $this->config->getValue('hipchat', 'room');
+        $this->color = strtolower($this->config->getValue('hipchat', 'color'));
+        $this->notify = $this->config->getValue("hipchat", 'notify');
     }
 
     public function run()
     {
         $currencyRate = $this->currencyChecker->getRate();
         $message = sprintf($this->config->getValue("main", "message"), $currencyRate);
-        $this->notifier->sendMessage("ProCreative", "yellow", $message);
+        $this->notifier->sendMessage($this->room, $this->color, $message, $this->notify);
     }
 }
