@@ -16,6 +16,11 @@ class CurrencyChecker
         $this->curl = new \Curl();
     }
 
+    public function getRate()
+    {
+        return $this->queryRateExchange();
+    }
+
     private function queryRateExchange()
     {
         $this->curl->get("http://rate-exchange.appspot.com/currency", [
@@ -23,11 +28,6 @@ class CurrencyChecker
             'to' => $this->to
         ]);
         return $this->curl->response->rate;
-    }
-
-    public function getRate()
-    {
-        return $this->queryRateExchange();
     }
 
 }

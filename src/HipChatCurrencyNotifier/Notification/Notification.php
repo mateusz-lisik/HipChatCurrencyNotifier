@@ -1,17 +1,19 @@
 <?php
 /**
- *@author Mateusz Lisik <matt@procreative.eu>
+ * @author Mateusz Lisik <matt@procreative.eu>
  */
 
 namespace Matt\HipChatCurrencyNotifier\Notification;
 
 
-class Notification {
+class Notification
+{
     const NOTIFICATION_URL = 'hipchat.com/v2/room/%s/notification?auth_token=%s';
     private $token;
     private $curl;
 
-    public function __construct($token) {
+    public function __construct($token)
+    {
         $this->token = $token;
         $this->curl = new \Curl();
         $this->curl->setHeader('content-type', 'application/json');
