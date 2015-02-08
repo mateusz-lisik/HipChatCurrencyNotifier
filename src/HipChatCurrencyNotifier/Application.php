@@ -21,7 +21,8 @@ class Application
         $this->config = new Config();
         $this->currencyChecker = new CurrencyChecker(
             $this->config->getValue("currency", "from"),
-            $this->config->getValue("currency", "to")
+            $this->config->getValue("currency", "to"),
+            $this->config->getValue('currency', "apikey")
         );
 
         $this->notifier = new Notification($this->config->getValue("hipchat", "token"));

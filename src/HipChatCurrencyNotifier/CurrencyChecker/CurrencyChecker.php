@@ -8,11 +8,13 @@ class CurrencyChecker
     private $from;
     private $to;
     private $curl;
+    private $apiKey;
 
-    public function __construct($from, $to)
+    public function __construct($from, $to, $apiKey)
     {
         $this->to = $to;
         $this->from = $from;
+        $this->apiKey = $apiKey;
         $this->curl = new \Curl();
     }
 
@@ -23,11 +25,13 @@ class CurrencyChecker
 
     private function queryRateExchange()
     {
-        $this->curl->get("http://rate-exchange.appspot.com/currency", [
-            'from' => $this->from,
-            'to' => $this->to
+        $this->curl->get("http://openexchangerates.org/api/latest.json", [
+            'base' => $this->from,
+            'app_id' => $this->apiKey
         ]);
-        return $this->curl->response->rate;
+        /** @noinspection PhpUndefinedFieldInspection */
+        $rates = (array) $this->curl->response->rates;
+        return $rates[$this->to];
     }
 
 }
